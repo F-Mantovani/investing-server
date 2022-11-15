@@ -89,7 +89,6 @@ router.post('/login', async (req, res, next) => {
 
 	try {
 		const foundUser = await User.findOne({ email });
-    console.log(foundUser)
 		if (!foundUser) {
 			// If the user is not found, send an error response
 			res.status(401).json({ message: 'Email or password incorrect' });
