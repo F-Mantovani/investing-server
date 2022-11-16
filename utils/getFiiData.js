@@ -14,38 +14,33 @@ module.exports =  async (fiiName) => {
     const $ = cheerio.load(data)
     const fiiObject = {}
     fiiObject.name = fiiName
-  
-    $('div.top-info strong.value').each((i, el) => {
-    
-      const fiiInfo = $(el).text()
-   
-      switch(i){
-        case 0:
-          fiiObject.currentValue = fiiInfo
-          break;
-        case 3:
-          fiiObject.dividendYield = fiiInfo
-          break;
-        case 5:
-          fiiObject.patrimonialPerShare = fiiInfo
-          break;
-        case 6:
-          fiiObject.pvp = fiiInfo
-          break;
-        case 11: 
-          fiiObject.dividend24Months = fiiInfo
-          break;
-        case 20:
-          fiiObject.rent = fiiInfo
-          break;
+
+    const names = [
+      'Valor atual',
+      'Min. 52 semanas',
+      'Máx. 52 semanas',
+      'Valorização (12m)',
+      'Val. patrimonial p/cota',
+      'P/VP',
+    ]
+
+    const divs = $('div.top-info div.info div div')
+
+    for (const div of divs) {
+      const name = $(div).find('h3.title').text()
+
+      if (name && names.includes(name)) {
+        const value = $(div).find('strong').text()
+        fiiObject[name] = value
       }
-  
-    })
+
+    }
   
     return fiiObject
-  
+
+   
   } catch (error) {
-    console.log('this is the error =>',error)
+    console.log('this is the error =>', error)
   }
 
 }

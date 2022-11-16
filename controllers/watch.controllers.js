@@ -2,6 +2,7 @@ const Watch = require('../services/watch.service');
 const asyncForEach = require('../utils/asyncForEach');
 const getFiiData = require('../utils/getFiiData');
 const throwError = require('../utils/throwError');
+const statusInvest = require('statusInvest')
 
 const WatchControllers = {
 	create: async (req, res, next) => {
